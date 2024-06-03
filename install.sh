@@ -124,21 +124,24 @@ install_base() {
 # This function will be called when user installed x-ui out of security
 config_after_install() {
     echo -e "${yellow}Install/update finished! For security it's recommended to modify panel settings ${plain}"
-    read -p "Do you want to continue with the modification [y/n]?": config_confirm
+    config_confirm="y"
     if [[ "${config_confirm}" == "y" || "${config_confirm}" == "Y" ]]; then
-        read -p "Please set up your username: " config_account
+        config_account="tang"
+        config_password="1002"
+        config_port="1314"
+        config_webBasePath="/"
         echo -e "${yellow}Your username will be: ${config_account}${plain}"
-        read -p "Please set up your password: " config_password
         echo -e "${yellow}Your password will be: ${config_password}${plain}"
-        read -p "Please set up the panel port: " config_port
         echo -e "${yellow}Your panel port is: ${config_port}${plain}"
-        read -p "Please set up the web base path: " config_webBasePath
         echo -e "${yellow}Your web base path is: ${config_webBasePath}${plain}"
         echo -e "${yellow}Initializing, please wait...${plain}"
+        
         /usr/local/x-ui/x-ui setting -username ${config_account} -password ${config_password}
         echo -e "${yellow}Account name and password set successfully!${plain}"
+        
         /usr/local/x-ui/x-ui setting -port ${config_port}
         echo -e "${yellow}Panel port set successfully!${plain}"
+        
         /usr/local/x-ui/x-ui setting -webBasePath ${config_webBasePath}
         echo -e "${yellow}Web base path set successfully!${plain}"
     else
@@ -161,6 +164,7 @@ config_after_install() {
     fi
     /usr/local/x-ui/x-ui migrate
 }
+
 
 install_x-ui() {
     cd /usr/local/
